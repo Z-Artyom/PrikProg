@@ -1,0 +1,1 @@
+Добро пожаловать, <?=$user?>! &nbsp; <?=html::anchor('index/logout','Выйти') ?>
