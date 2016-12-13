@@ -17,7 +17,10 @@
             </div>
         </div>
         <div class="middle-container">
-           <? if (isset($block_center)):?>
+        
+           <? 
+
+           if (isset($block_center)):?>
                     <? foreach ($block_center as $cblock):?>
                         <?=$cblock?>
                     <?endforeach?>

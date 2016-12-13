@@ -14,15 +14,17 @@ class Controller_Index extends Controller_Base {
                 $errors[] = "Введите логин!";
             }
 
-            else if (empty($data['password'])) {
+            if (empty($data['password'])) {
                 $errors[] = "Введите пароль!";
             }
 
             else {
             $user = ORM::factory('user')->where('login', '=', $data['username'])->find();
-            if ($user->loaded() && $user->password == $data['password']) {
+
+            if ($user->loaded() && $user->password == $data['password'] && ($user->role->code == 'admin' || $user->role->code == 'customer')) {
 
             Cookie::set('user', $user->login);
+            $this->session->set('check', $user->role->code);
             $this->redirect('/home');
         }
 
@@ -42,6 +44,7 @@ class Controller_Index extends Controller_Base {
     public function action_logout() {
         if (Cookie::get('user')) {
             Cookie::delete('user');
+            $this->session->delete('check');
             $this->redirect('/');
         }
         else {
